@@ -1,1 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:mysql://robot-do-user-1968994-0.b.db.ondigitalocean.com:25060/bielozertsev
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: doadmin
+    password: AVNS_I6wlDKjGszZn1wvLr9t
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  mysql:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+    connector:
+      j:
+        library: com.mysql.cj.jdbc.Driver
+    logging:
+      level:
+        org.hibernate.SQL: DEBUG
+        org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+      file: /path/to/hibernate.log
+
 
