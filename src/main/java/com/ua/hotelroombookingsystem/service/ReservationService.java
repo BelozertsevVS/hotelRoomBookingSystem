@@ -7,11 +7,9 @@ import com.ua.hotelroombookingsystem.domain.Room;
 import com.ua.hotelroombookingsystem.dto.ReservationDto;
 import com.ua.hotelroombookingsystem.dto.ReservationIdDto;
 import com.ua.hotelroombookingsystem.dto.ReservationRequestDto;
-import com.ua.hotelroombookingsystem.dto.RoomDto;
 import com.ua.hotelroombookingsystem.repository.GuestRepository;
 import com.ua.hotelroombookingsystem.repository.ReservationRepository;
 import com.ua.hotelroombookingsystem.repository.RoomRepository;
-import jakarta.persistence.Column;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +17,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.scheduling.annotation.Scheduled;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +42,17 @@ public class ReservationService {
                 .map(ReservationService::buildReservationDto)
                 .collect(Collectors.toList());
 
+    }
+
+    @Scheduled(cron = "0 49 17 * * ?")
+    public void updateReservationStatusAutomatically() {
+        LocalDate currentDay = LocalDate.now();
+        reservationRepository.findAll().stream()
+                .filter(reservation -> reservation.getCheckOutDate().isBefore(currentDay))
+                .forEach(reservation -> {
+                    reservation.setReservationStatus(ReservationStatus.valueOf(ReservationStatus.CANCELED.name()));
+                    reservationRepository.save(reservation);
+                });
     }
 
 //    public List<RoomDto> findFreeRooms(ReservationRequestDto reservationRequestDto) {
