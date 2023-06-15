@@ -45,9 +45,10 @@ public class RoomService {
         Long roomId = reservationRequestDto.getRoomId();
         LocalDate checkInDate = reservationRequestDto.getCheckInDate();
         LocalDate checkOutDate = reservationRequestDto.getCheckOutDate();
-        return reservationRepository.findFreeRooms(roomId, checkInDate, checkOutDate).stream()
-                .map(RoomService::buildRoomDto)
+       return reservationRepository.findFreeRooms(checkInDate, checkOutDate).stream()
+               .map(RoomService::buildRoomDto)
                 .collect(Collectors.toList());
+
 
     }
 

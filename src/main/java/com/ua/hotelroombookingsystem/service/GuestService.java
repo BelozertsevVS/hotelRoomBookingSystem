@@ -31,7 +31,6 @@ public class GuestService {
     }
 
 
-
     public List<GuestDto> findGuestBySurname(GuestSurnameDto guestSurnameDto) {
 
         List<Guest> guests = guestRepository.findGuestBySurname(guestSurnameDto.getSurname());
@@ -40,10 +39,15 @@ public class GuestService {
                 .collect(Collectors.toList());
     }
 
-    public GuestDto findGuestByPassportId (GuestPassportIdDto guestPassportIdDto) {
+    public GuestDto findGuestByPassportId(GuestPassportIdDto guestPassportIdDto) {
         String passportId = guestPassportIdDto.getPassportId();
         Guest guest = guestRepository.findGuestByPassportId(passportId);
-        return buildGuestDto(guest);
+        if (guest != null) {
+            return buildGuestDto(guest);
+        } else {
+
+            return null;
+        }
     }
 
     public List<GuestDto> findAll() {
@@ -52,7 +56,7 @@ public class GuestService {
                 .collect(Collectors.toList());
     }
 
-    public void updateGuestInformation (GuestDto guestDto) {
+    public void updateGuestInformation(GuestDto guestDto) {
         Guest guest = guestRepository.findById(guestDto.getId())
                 .orElseThrow(() -> new RuntimeException("Guest not found"));
 

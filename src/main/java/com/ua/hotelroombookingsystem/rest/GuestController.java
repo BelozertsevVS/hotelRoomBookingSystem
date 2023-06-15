@@ -29,8 +29,9 @@ public class GuestController {
     public ResponseEntity<List<GuestDto>> findGuestBySurname(GuestSurnameDto guestSurnameDto) {
         return ResponseEntity.ok(guestService.findGuestBySurname(guestSurnameDto));
     }
+
     @GetMapping("/guest/find/by/passport")
-    public ResponseEntity<GuestDto> findGuestByPassportId (GuestPassportIdDto guestPassportIdDto) {
+    public ResponseEntity<GuestDto> findGuestByPassportId(GuestPassportIdDto guestPassportIdDto) {
         return ResponseEntity.ok(guestService.findGuestByPassportId(guestPassportIdDto));
     }
 
